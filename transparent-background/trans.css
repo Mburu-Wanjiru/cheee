@@ -1,0 +1,17 @@
+body{
+    background-color: url("");
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+ p{
+    background-image: conic-gradient(aqua, deeppink, 
+    orange, aqua);  
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+} 
