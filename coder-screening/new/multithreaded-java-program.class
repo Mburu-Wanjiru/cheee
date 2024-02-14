@@ -1,0 +1,231 @@
+/* Tell me the errors with my code. Its supposed to be a multithreaded */
+java program using executorservice that will read data from my text file. 
+Each line in my file contains an infix operation of 1 number, 
+an operator and another number all separated by a spa */
+
+
+
+
+
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class Main {
+    public static void main(String[] args) {
+        String filePath = "file.txt";
+
+        ExecutorService executor = Executors.newFixedThreadPool(4);
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                final String currentLine = line; // Fix the line variable for use in the lambda
+                executor.submit(() -> processLine(currentLine));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            executor.shutdown();
+        }
+    }
+
+    private static void processLine(String line) {
+        try{
+            String[] parts = line.split(" ");
+            double num1 = Double.parseDouble(parts[0]);
+            double num2 = Double.parseDouble(parts[2]);
+            String operator = parts[1];
+
+            double result = 0;
+            switch (operator) {
+                case "+":
+                    result = num1 + num2;
+                    break;
+                case "-":
+                    result = num1 - num2;
+                    break;
+                case "*":
+                    result = num1 * num2;
+                    break;
+                case "/":
+                    result = num1 / num2;
+                    break;
+                default:
+                    System.out.println("Invalid operator: " + operator);
+                    return;
+            }
+
+            System.out.println(Thread.currentThread().getName() + ": " + line + " = " + result);
+        } catch (Exception e){
+            System.out.println("Error processing line: " + line + " Error: " + e.getMessage());
+        }
+        
+    }
+}
+
+
+
+
+/*correct*/
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class Main {
+    public static void main(String[] args) {
+        String filePath = "file.txt";
+
+        ExecutorService executor = Executors.newFixedThreadPool(4);
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                final String currentLine = line; // Fix the line variable for use in the lambda
+                executor.submit(() -> processLine(currentLine));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            executor.shutdown();
+        }
+    }
+
+    private static void processLine(String line) {
+        try{
+            String[] parts = line.split(" ");
+            double num1 = Double.parseDouble(parts[0]);
+            double num2 = Double.parseDouble(parts[2]);
+            String operator = parts[1];
+
+            double result = 0;
+            switch (operator) {
+                case "+":
+                    result = num1 + num2;
+                    break;
+                case "-":
+                    result = num1 - num2;
+                    break;
+                case "*":
+                    result = num1 * num2;
+                    break;
+                case "/":
+                    result = num1 / num2;
+                    break;
+                default:
+                    System.out.println("Invalid operator: " + operator);
+                    return;
+            }
+
+            System.out.println(Thread.currentThread().getName() + ": " + line + " = " + result);
+        } catch (Exception e){
+            System.out.println("Error processing line: " + line + " Error: " + e.getMessage());
+        }
+        
+    }
+}
+
+
+
+
+/*better */
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class Main {
+    public static void main(String[] args) {
+        String filePath = "path/to/your/file.txt"; // Replace with the actual file path
+
+        ExecutorService executor = Executors.newFixedThreadPool(4);
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                executor.submit(() -> processLine(line));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            executor.shutdown();
+        }
+    }
+
+    private static void processLine(String line) {
+        String[] parts = line.split(" ");
+        if (parts.length != 3) {
+            System.out.println("Invalid line format: " + line);
+            return;
+        }
+
+        try {
+            double num1 = Double.parseDouble(parts[0]);
+            double num2 = Double.parseDouble(parts[2]);
+            String operator = parts[1];
+
+            double result = 0;
+            // ... (rest of the processing logic)
+
+            synchronized (System.out) { // Synchronize output if needed
+                System.out.println(Thread.currentThread().getName() + ": " + line + " = " + result);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid number format in line: " + line);
+        }
+    }
+}
+
+Response 1
+
+I've reviewed your code and found a few potential issues:
+
+File Path:
+
+Consider absolute path: Instead of "file.txt", provide the full path to the file to ensure it's found, especially if it's not in the same directory as your code.
+Exception Handling:
+
+Handle NumberFormatException: If a line in the file doesn't contain valid numbers, the parseDouble calls could throw NumberFormatException. Add a try-catch block to handle this exception gracefully.
+Thread Safety:
+
+Synchronize output: While unlikely in this specific case, multiple threads printing to the console simultaneously could interleave output. Use synchronized blocks or other synchronization mechanisms if necessary.
+Input Validation:
+
+Check for empty lines: The code assumes each line has three parts (number, operator, number). Consider checking for empty lines or invalid input formats to prevent errors.
+Here's the revised code with suggested corrections:
+
+
+
+
+
+
+
+
+
+
+
+
+Response 1
+
+I've reviewed your code and found a few potential issues:
+
+File Path:
+
+Consider absolute path: Instead of "file.txt", provide the full path to the file to ensure it's found, especially if it's not in the same directory as your code.
+Exception Handling:
+
+Handle NumberFormatException: If a line in the file doesn't contain valid numbers, the parseDouble calls could throw NumberFormatException. Add a try-catch block to handle this exception gracefully.
+Thread Safety:
+
+Synchronize output: While unlikely in this specific case, multiple threads printing to the console simultaneously could interleave output. Use synchronized blocks or other synchronization mechanisms if necessary.
+Input Validation:
+
+Check for empty lines: The code assumes each line has three parts (number, operator, number). Consider checking for empty lines or invalid input formats to prevent errors.
+Here's the revised code with suggested corrections:
