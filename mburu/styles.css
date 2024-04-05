@@ -1,0 +1,90 @@
+
+ul {
+    list-style: none;
+  }
+  li {
+    list-style: none;
+  }
+  li.octocat {
+    display: inline-block;
+    margin-left: 38px;
+  }
+  .octocat > a {
+    display: inline-block;
+    border: 1px solid gray;
+    border-radius: 1%;
+    padding: 0 auto;
+    width: 300px;
+    max-width: 100%;
+    margin: 0 10px;
+    padding-left: 10px;
+    overflow: auto;
+    vertical-align: top;
+  }
+  .image-number::before {
+    content: "#";
+  }
+  .image-number {
+    opacity: 0.5;
+    clear: right;
+    font-size: 11px;
+  }
+  .octocat {
+    border-bottom: 1px solid #D0D0D0;
+  }
+  .image-caption {
+    margin-left: 20px;
+    display: inline-block;
+    opacity: 0.8;
+    padding-left: 185px;
+  }
+  span a {
+    opacity: 0.4;
+  }
+  .image-caption, .authors img {
+    margin: 6px;
+    display: inline-block;
+    font-family: sans-serif;
+    font-size: 15px;
+  }
+  .authors img {
+    display: inline-block;
+    width: 25px;
+    position: relative;
+    clear: left;
+    border-radius: 15%;
+    padding: 0 auto;
+  }
+  a {
+  color: inherit;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 10px;
+  }
+  img {
+    width: 100%;
+  }
+  /* Used some help from the example we built in class to help with the footer */
+  .image-caption {
+    float: right;
+    text-align: right;
+    padding: 0px;
+  }
+  
+  .authors,
+  .authors li,
+  .authors a {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0px;
+  }
+  .authors a {
+    width: 28px;
+  }
+  .authors:before {
+    content: "";
+    border: 8px solid transparent;
+    border-top-color: #C3C3C3;
+    position: absolute;
+  }
+  
